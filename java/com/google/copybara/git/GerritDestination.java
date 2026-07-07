@@ -205,6 +205,11 @@ public final class GerritDestination implements Destination<GitRevision> {
 
     private Optional<ChangeInfo> findActiveChange(String hashTag)
         throws RepoException, ValidationException {
+      if (gerritOptions.unsafeDontCheckForDups) {
+        // --gerrit-unsafe-dont-check-for-dups: skip the REST query and behave as if no existing
+        // change was found.
+        return Optional.empty();
+      }
 
       console.progressFmt("Querying Gerrit ('%s') for active changes with hashtag '%s'",
           repoUrl, hashTag);

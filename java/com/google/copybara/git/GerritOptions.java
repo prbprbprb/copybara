@@ -89,6 +89,17 @@ public class GerritOptions implements Option {
       description = "Create a new change instead of trying to reuse an existing one.")
   protected boolean newChange = false;
 
+  @Parameter(
+      names = "--gerrit-unsafe-dont-check-for-dups",
+      description =
+          "UNSAFE: skip querying Gerrit (by the internal copybara hashtag) for an existing open"
+              + " change before creating one. Lets git.gerrit_destination run with no Gerrit REST"
+              + " call at all, e.g. against an ssh-only Gerrit URL. Cost: each run mints a fresh"
+              + " Change-Id, so re-running before a change is submitted _may_ create a duplicate"
+              + " change instead of a new patch set. Generated Change-Ids are stable so you"
+              + " might get lucky.")
+  protected boolean unsafeDontCheckForDups = false;
+
   @Parameter(names = "--gerrit-topic", description = "Gerrit topic to use")
   protected String gerritTopic = "";
 
